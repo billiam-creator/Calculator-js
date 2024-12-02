@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #calculator {
+            display: inline-block;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        #display {
+            width: 220px;
+            height: 30px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-align: right;
+            border: none;
+            background-color: #f1f1f1;
+            padding: 5px;
+        }
+        button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <div>
+            <input type="text" id="display" value="" readonly>
+        </div>
+        <button onclick="appendValue('7')">7</button>
+        <button onclick="appendValue('8')">8</button>
+        <button onclick="appendValue('9')">9</button>
+        <button onclick="appendOperator('/')">&#247;</button>
+        <br>
+        <button onclick="appendValue('4')">4</button>
+        <button onclick="appendValue('5')">5</button>
+        <button onclick="appendValue('6')">6</button>
+        <button onclick="appendOperator('*')">&#215;</button>
+        <br>
+        <button onclick="appendValue('1')">1</button>
+        <button onclick="appendValue('2')">2</button>
+        <button onclick="appendValue('3')">3</button>
+        <button onclick="appendOperator('-')">&#8722;</button>
+        <br>
+        <button onclick="appendValue('0')">0</button>
+        <button onclick="appendValue('.')">.</button>
+        <button onclick="calculateResult()">=</button>
+        <button onclick="appendOperator('+')">&#43;</button>
+        <br>
+        <button onclick="clearAll()" style="width: 220px;">C</button>
+    </div>
+
+    <script>
+        let displayValue = "";
+
+        function appendValue(value) {
+            displayValue += value;
+            updateDisplay();
+        }
+
+        function appendOperator(operator) {
+            if (displayValue === "") return;
+            const lastChar = displayValue.slice(-1);
+            if ("+-*/".includes(lastChar)) {
+                displayValue = displayValue.slice(0, -1) + operator;
+            } else {
+                displayValue += operator;
+            }
+            updateDisplay();
+        }
+
+        function calculateResult() {
+            try {
+                const result = eval(displayValue);
+                displayValue = result.toString();
+            } catch (e) {
+                displayValue = "Error";
+            }
+            updateDisplay();
+        }
+
+        function clearAll() {
+            displayValue = "";
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById('display').value = displayValue;
+        }
+    </script>
+</body>
+</html>
